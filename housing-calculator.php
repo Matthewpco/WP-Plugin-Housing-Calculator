@@ -3,7 +3,7 @@
 Plugin Name: Housing Calculator
 Plugin URI: https://github.com/Matthewpco/WP-Plugin-Housing-Calculator
 Description: A plugin that calculates the maximum amount you should spend on housing per month based on 30% of your gross monthly income.
-Version: 1.3.0
+Version: 1.4.0
 Author: Gary Matthew Payne
 Author URI: https://wpwebdevelopment.com/
 */
@@ -19,26 +19,33 @@ function housing_calculator_menu() {
 
 add_action('admin_menu', 'housing_calculator_menu');
 
-
 function housing_calculator_page() {
     housing_calculator_form();
 }
 
 function housing_calculator_form() {
     if (isset($_POST['income_type']) && isset($_POST['income_amount']) && isset($_POST['income_percentage'])) {
-        $income_type = $_POST['income_type'];
-        $income_amount = $_POST['income_amount'];
-        $income_percentage = $_POST['income_percentage'] / 100;
-        if ($income_type == 'hourly') {
-            $monthly_income = $income_amount * 40 * 52 / 12;
-        } elseif ($income_type == 'annual') {
-            $monthly_income = $income_amount / 12;
-        } else {
-            $monthly_income = $income_amount;
-        }
-        $max_housing = $monthly_income * $income_percentage;
-        echo '<p style="padding: 2% 0 0 2%;">Based on ' . ($_POST['income_percentage']) . '% of your monthly income, your maximum monthly housing expense should be: $' . number_format($max_housing, 2) . '</p>';
-    }
+		
+		if(is_numeric($_POST['income_amount'])) {
+			$income_type = $_POST['income_type'];
+			$income_amount = $_POST['income_amount'];
+			$income_percentage = $_POST['income_percentage'] / 100;
+			if ($income_type == 'hourly') {
+				$monthly_income = $income_amount * 40 * 52 / 12;
+			} elseif ($income_type == 'annual') {
+				$monthly_income = $income_amount / 12;
+			} else {
+				$monthly_income = $income_amount;
+			}
+			$max_housing = $monthly_income * $income_percentage;
+			echo '<p style="padding: 2% 0 0 2%;">Based on ' . ($_POST['income_percentage']) . '% of your monthly income, your maximum monthly housing expense should be: $' . number_format($max_housing, 2) . '</p>';
+		} else {
+			echo '<p style="padding: 2%;">' . $_POST['income_amount'] . ' is not valid, please enter a valid number.</p>';
+		}
+		
+	}
+		
+        
     ?>
     <form method="post" style="padding: 2% 0 0 2%;">
         <label for="income_type">Enter your income type:</label>
