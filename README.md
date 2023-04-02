@@ -1,4 +1,4 @@
-![](https://github.com/Matthewpco/WP-Plugin-Housing-Calculator/Housing-calculator-page.png)
+![](https://github.com/Matthewpco/WP-Plugin-Housing-Calculator/main/Housing-calculator-page.png)
 
 # WordPress plugin to calculate housing costs based on various incomes and percentages.
 
@@ -20,4 +20,4 @@
 
   <br>
   
-![](https://github.com/Matthewpco/WP-Plugin-Housing-Calculator/Housing-calculator-dashboard.png)
+![](https://github.com/Matthewpco/WP-Plugin-Housing-Calculator/main/Housing-calculator-dashboard.png)
