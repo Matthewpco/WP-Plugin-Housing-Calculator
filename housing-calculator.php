@@ -3,7 +3,7 @@
 Plugin Name: Housing Calculator
 Plugin URI: https://github.com/Matthewpco/WP-Plugin-Housing-Calculator
 Description: A plugin that calculates the maximum amount you should spend on housing per month based on 30% of your gross monthly income.
-Version: 1.9.0
+Version: 2.0.0
 Author: Gary Matthew Payne
 Author URI: https://wpwebdevelopment.com/
 */
