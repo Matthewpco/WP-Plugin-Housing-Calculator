@@ -24,16 +24,32 @@ function housing_calculator_page() {
 }
 
 function housing_calculator_form() {
-    if (isset($_POST['hourly_rate'])) {
-        $hourly_rate = $_POST['hourly_rate'];
-        $monthly_income = $hourly_rate * 40 * 52 / 12;
-        $max_housing = $monthly_income * 0.3;
-        echo '<p style="padding: 2%;">Based on 30% of your monthly income, your maximum monthly housing expense should be: $' . number_format($max_housing, 2) . '</p>';
+    if (isset($_POST['income_type']) && isset($_POST['income_amount']) && isset($_POST['income_percentage'])) {
+        $income_type = $_POST['income_type'];
+        $income_amount = $_POST['income_amount'];
+        $income_percentage = $_POST['income_percentage'] / 100;
+        if ($income_type == 'hourly') {
+            $monthly_income = $income_amount * 40 * 52 / 12;
+        } elseif ($income_type == 'annual') {
+            $monthly_income = $income_amount / 12;
+        } else {
+            $monthly_income = $income_amount;
+        }
+        $max_housing = $monthly_income * $income_percentage;
+        echo '<p style="padding: 2% 0 0 2%;">Based on ' . ($_POST['income_percentage']) . '% of your monthly income, your maximum monthly housing expense should be: $' . number_format($max_housing, 2) . '</p>';
     }
     ?>
-    <form method="post" style="padding: 2%;">
-        <label for="hourly_rate">Enter your hourly rate:</label>
-        <input type="text" name="hourly_rate" id="hourly_rate">
+    <form method="post" style="padding: 2% 0 0 2%;">
+        <label for="income_type">Enter your income type:</label>
+        <select name="income_type" id="income_type">
+            <option value="hourly">Hourly</option>
+            <option value="annual">Annual</option>
+            <option value="monthly">Monthly</option>
+        </select><br><br>
+        <label for="income_amount">Enter your income amount:</label>
+        <input type="text" name="income_amount" id="income_amount"><br><br>
+        <label for="income_percentage">Enter the percentage of income to use for calculation:</label>
+        <input type="text" name="income_percentage" id="income_percentage" value="30"><br><br>
         <input type="submit" value="Calculate">
     </form>
     <?php
