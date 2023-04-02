@@ -43,6 +43,7 @@ function housing_calculator_form($text_align = 'left') {
     <div class="wrap">
         <h1>Housing Calculator</h1>
         <form method="post" class="housing-calculator-form" style="text-align: <?php echo $text_align; ?>;">
+
             <label for="income_type">Enter your income type:</label>
             <select name="income_type" id="income_type">
                 <option value="hourly">Hourly</option>
@@ -61,6 +62,7 @@ function housing_calculator_form($text_align = 'left') {
             <input type="submit" value="Calculate">
         </form>
     </div>
+
 
     <?php
 
