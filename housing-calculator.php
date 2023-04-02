@@ -12,16 +12,19 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
+// Add a menu page for the Housing Calculator in the WordPress admin dashboard
 function housing_calculator_menu() {
     add_menu_page('Housing Calculator', 'Housing Calculator', 'manage_options', 'housing-calculator', 'housing_calculator_page');
 }
 
 add_action('admin_menu', 'housing_calculator_menu');
 
+// Display the Housing Calculator form on the Housing Calculator page in the WordPress admin dashboard
 function housing_calculator_page() {
     housing_calculator_form();
 }
 
+// Display the Housing Calculator form with text alignment specified by the text_align parameter
 function housing_calculator_form($text_align = 'left') {
     ?>
     <form method="post" style="padding: 2%; text-align: <?php echo $text_align; ?>">
@@ -43,11 +46,13 @@ function housing_calculator_form($text_align = 'left') {
         <input type="submit" value="Calculate">
     </form>
     <?php
+    // If the form has been submitted, sanitize the income_amount input and calculate and display the maximum amount to spend on housing per month
     if (isset($_POST['income_type']) && isset($_POST['income_amount']) && isset($_POST['income_percentage'])) {
 		
-		if(is_numeric($_POST['income_amount'])) {
+		$income_amount = sanitize_text_field($_POST['income_amount']);
+		
+		if(is_numeric($income_amount)) {
 			$income_type = $_POST['income_type'];
-			$income_amount = $_POST['income_amount'];
 			$income_percentage = $_POST['income_percentage'] / 100;
 			if ($income_type == 'hourly') {
 				$monthly_income = $income_amount * 40 * 52 / 12;
@@ -64,6 +69,7 @@ function housing_calculator_form($text_align = 'left') {
     }
 }
 
+// Register a shortcode for displaying the Housing Calculator form with text alignment specified by the text_align attribute
 function housing_calculator_shortcode($atts) {
     ob_start();
     $atts = shortcode_atts(array(
