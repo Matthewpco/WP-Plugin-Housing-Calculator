@@ -3,7 +3,7 @@
 Plugin Name: Housing Calculator
 Plugin URI: https://github.com/Matthewpco/WP-Plugin-Housing-Calculator
 Description: A plugin that calculates the maximum amount you should spend on housing per month based on 30% of your gross monthly income.
-Version: 1.6.0
+Version: 1.8.0
 Author: Gary Matthew Payne
 Author URI: https://wpwebdevelopment.com/
 */
@@ -27,24 +27,56 @@ function housing_calculator_page() {
 // Display the Housing Calculator form with text alignment specified by the text_align parameter
 function housing_calculator_form($text_align = 'left') {
     ?>
-    <form method="post" style="padding: 2%; text-align: <?php echo $text_align; ?>">
-        <label for="income_type">Enter your income type:</label>
-        <select name="income_type" id="income_type">
-            <option value="hourly">Hourly</option>
-            <option value="annual">Annual</option>
-            <option value="monthly">Monthly</option>
-        </select><br><br>
-        <label for="income_amount">Enter your income amount:</label>
-        <input type="text" name="income_amount" id="income_amount"><br><br>
-        <label for="income_percentage">Select the percentage of income to use for calculation:</label>
-        <select name="income_percentage" id="income_percentage">
-            <option value="25">25%</option>
-            <option value="30" selected>30%</option>
-            <option value="35">35%</option>
-            <option value="40">40%</option>
-        </select><br><br>
-        <input type="submit" value="Calculate">
-    </form>
+    <style>
+        .housing-calculator-form {
+            padding: 2%;
+            text-align: <?php echo $text_align; ?>;
+            font-family: Arial, sans-serif;
+        }
+        .housing-calculator-form label {
+            display: block;
+            margin-bottom: 0.5em;
+        }
+        .housing-calculator-form input[type="text"],
+        .housing-calculator-form select {
+            padding: 0.5em 1.5em;
+            margin-bottom: 1em;
+            border-radius: 3px;
+            border: 1px solid #ccc;
+        }
+        .housing-calculator-form input[type="submit"] {
+            padding: 0.5em 1em;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        .housing-calculator-form input[type="submit"]:hover {
+            background-color: #3e8e41;
+        }
+    </style>
+    <div class="wrap">
+        <h1>Housing Calculator</h1>
+        <form method="post" class="housing-calculator-form">
+            <label for="income_type">Enter your income type:</label>
+            <select name="income_type" id="income_type">
+                <option value="hourly">Hourly</option>
+                <option value="annual">Annual</option>
+                <option value="monthly">Monthly</option>
+            </select>
+            <label for="income_amount">Enter your income amount:</label>
+            <input type="text" name="income_amount" id="income_amount">
+            <label for="income_percentage">Select the percentage of income to use for calculation:</label>
+            <select name="income_percentage" id="income_percentage">
+                <option value="25">25%</option>
+                <option value="30" selected>30%</option>
+                <option value="35">35%</option>
+                <option value="40">40%</option>
+            </select>
+            <input type="submit" value="Calculate">
+        </form>
+    </div>
     <?php
     // If the form has been submitted, sanitize the income_amount input and calculate and display the maximum amount to spend on housing per month
     if (isset($_POST['income_type']) && isset($_POST['income_amount']) && isset($_POST['income_percentage'])) {
