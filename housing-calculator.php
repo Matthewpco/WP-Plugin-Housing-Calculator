@@ -3,7 +3,7 @@
 Plugin Name: Housing Calculator
 Plugin URI: https://github.com/Matthewpco/WP-Plugin-Housing-Calculator
 Description: A plugin that calculates the maximum amount you should spend on housing per month based on 30% of your gross monthly income.
-Version: 1.8.0
+Version: 1.9.0
 Author: Gary Matthew Payne
 Author URI: https://wpwebdevelopment.com/
 */
@@ -12,6 +12,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
+
+// The fourth parameter of the wp_enqueue_style() function is set to the file modification time of the file. Whenever the file is modified, its modification time will change and a new version of the file will be enqueued, preventing caching issues.
+function housing_calculator_enqueue_styles() {
+    wp_enqueue_style('style', plugin_dir_url(__FILE__) . 'css/style.css', array(), filemtime(plugin_dir_path(__FILE__) . 'css/style.css'));
+}
+
+add_action('admin_enqueue_scripts', 'housing_calculator_enqueue_styles');
+add_action('wp_enqueue_scripts', 'housing_calculator_enqueue_styles');
+
+
 // Add a menu page for the Housing Calculator in the WordPress admin dashboard
 function housing_calculator_menu() {
     add_menu_page('Housing Calculator', 'Housing Calculator', 'manage_options', 'housing-calculator', 'housing_calculator_page');
@@ -19,46 +29,21 @@ function housing_calculator_menu() {
 
 add_action('admin_menu', 'housing_calculator_menu');
 
+
 // Display the Housing Calculator form on the Housing Calculator page in the WordPress admin dashboard
 function housing_calculator_page() {
     housing_calculator_form();
 }
 
+
 // Display the Housing Calculator form with text alignment specified by the text_align parameter
 function housing_calculator_form($text_align = 'left') {
     ?>
-    <style>
-        .housing-calculator-form {
-            padding: 2%;
-            text-align: <?php echo $text_align; ?>;
-            font-family: Arial, sans-serif;
-        }
-        .housing-calculator-form label {
-            display: block;
-            margin-bottom: 0.5em;
-        }
-        .housing-calculator-form input[type="text"],
-        .housing-calculator-form select {
-            padding: 0.5em 1.5em;
-            margin-bottom: 1em;
-            border-radius: 3px;
-            border: 1px solid #ccc;
-        }
-        .housing-calculator-form input[type="submit"] {
-            padding: 0.5em 1em;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 3px;
-            cursor: pointer;
-        }
-        .housing-calculator-form input[type="submit"]:hover {
-            background-color: #3e8e41;
-        }
-    </style>
+
     <div class="wrap">
         <h1>Housing Calculator</h1>
-        <form method="post" class="housing-calculator-form">
+        <form method="post" class="housing-calculator-form" style="text-align: <?php echo $text_align; ?>;">
+
             <label for="income_type">Enter your income type:</label>
             <select name="income_type" id="income_type">
                 <option value="hourly">Hourly</option>
@@ -77,7 +62,10 @@ function housing_calculator_form($text_align = 'left') {
             <input type="submit" value="Calculate">
         </form>
     </div>
+
+
     <?php
+
     // If the form has been submitted, sanitize the income_amount input and calculate and display the maximum amount to spend on housing per month
     if (isset($_POST['income_type']) && isset($_POST['income_amount']) && isset($_POST['income_percentage'])) {
 		
@@ -94,9 +82,9 @@ function housing_calculator_form($text_align = 'left') {
 				$monthly_income = $income_amount;
 			}
 			$max_housing = $monthly_income * $income_percentage;
-			echo '<p style="text-align: '.$text_align.';">Based on your income and selected percentage, the maximum amount you should spend on housing per month is: $' . number_format($max_housing, 2) . '</p>';
+			echo '<p style="padding: 2%; text-align: '.$text_align.';">Based on your income and selected percentage, the maximum amount you should spend on housing per month is: <strong>$' . number_format($max_housing, 2) . '</strong> </p>';
 		} else {
-			echo '<p style="color:red; text-align: '.$text_align.';">Please enter a valid income amount.</p>';
+			echo '<p style="padding: 2%; color:red; text-align: '.$text_align.';">Please enter a valid income amount.</p>';
 		}
     }
 }
