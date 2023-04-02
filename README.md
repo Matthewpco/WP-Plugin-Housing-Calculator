@@ -1,2 +1,23 @@
-# WP-Plugin-Housing-Calculator
-WordPress plugin to create an interactive form to input income amount and type then check against a percentage to return recommended housing cost.
+![](https://github.com/Matthewpco/WP-Plugin-Housing-Calculator/housing-calculator-page.png)
+
+# WordPress plugin to calculate housing costs based on various incomes and percentages.
+
+<br>
+
+## 🙋‍♂️ Introduction
+
+- This plugin creates a shortcode and menu in the dashboard witha  form to input your income select the income type and preferred percentage to calulate your housing cost per month. Generally around 30% of your gross income should be speant on housing.
+
+<br>
+
+## 📜 Features
+
+- HTML
+- CSS
+- PHP
+- WordPress Plugin
+
+
+  <br>
+  
+![](https://github.com/Matthewpco/WP-Plugin-Housing-Calculator/housing-calculator-dashboard.png)
